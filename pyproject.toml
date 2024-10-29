@@ -8,6 +8,7 @@ authors = ["wallred7 <william.allred2@mail.dcu.ie>"]
 python = "^3.10"
 pandas = "^2.2.3"
 numpy = "^2.1.2"
+scikit-learn = "^1.5.2"
 
 [tool.poetry.dev-dependencies]
 
