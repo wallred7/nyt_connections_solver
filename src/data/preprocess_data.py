@@ -72,6 +72,35 @@ class DataPreprocessor:
 
         return self.preprocessed_data_df
 
+    def split_data(self, train_size: float = 0.7, val_size: float = 0.15, test_size: float = 0.15) -> tuple:
+        """Splits the preprocessed data into training, validation, and testing sets.
+
+        Args:
+            train_size: Proportion of data for training.
+            val_size: Proportion of data for validation.
+            test_size: Proportion of data for testing.
+
+        Returns:
+            A tuple containing the training, validation, and testing DataFrames.
+        """
+        if not (train_size + val_size + test_size) == 1.0:
+            raise ValueError("Train, validation, and test sizes must sum to 1.0")
+
+        np.random.seed(42)
+        preprocessed_data = self.transform()
+        n = len(preprocessed_data)
+        idx = np.random.permutation(n)
+        train_idx = idx[:int(train_size * n)]
+        val_idx = idx[int(train_size * n):int((train_size + val_size) * n)]
+        test_idx = idx[int((train_size + val_size) * n):]
+
+        train_df = preprocessed_data.iloc[train_idx]
+        val_df = preprocessed_data.iloc[val_idx]
+        test_df = preprocessed_data.iloc[test_idx]
+
+        return train_df, val_df, test_df
+
+
 if __name__ == '__main__':
     preprocessor = DataPreprocessor()
     preprocessed_df = preprocessor.transform()
