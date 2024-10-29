@@ -3,8 +3,8 @@ This module provides a DataPreprocessor class to read JSON data, convert it into
 """
 
 import json
-import pandas as pd
-import numpy as np
+import pandas as pd # type: ignore (located in poetry env)
+import numpy as np # type: ignore (located in poetry env)
 from typing import List
 
 
