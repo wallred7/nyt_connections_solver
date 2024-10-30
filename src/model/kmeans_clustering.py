@@ -1,9 +1,7 @@
 import numpy as np # type: ignore
 from sklearn.metrics.pairwise import cosine_similarity, euclidean_distances  # type: ignore
 # from sentence_transformers import SentenceTransformer, util
-from typing import List, Dict, Union, Tuple, Optional
-import unittest
-import os
+from typing import List, Dict
 
 class KMeansClustering:
     """
@@ -101,6 +99,7 @@ class KMeansClustering:
         Returns:
             KMeansClustering: The fitted model.
         """
+        X = np.nan_to_num(X, nan=0.0) #Handle NaN values
         self._initialize_centroids(X)
         for _ in range(self.max_iter):
             similarities = self._compute_similarity(X, self.centroids)
@@ -136,6 +135,8 @@ class KMeansClustering:
         Returns:
             Dictionary mapping words to their embeddings
         """
+        if not words: #Handle empty words list
+            return {}
         words_set = set(map(str.lower, words))  # O(1) lookup
         word_to_embedding = {}
 
@@ -160,7 +161,7 @@ class KMeansClustering:
         # Report coverage
         found_words = set(word_to_embedding.keys())
         missing_words = words_set - found_words
-        coverage = len(found_words) / len(words_set) * 100
+        coverage = len(found_words) / len(words_set) * 100 if words_set else 0 #Handle empty words_set
 
         print(f"Found embeddings for {len(found_words)}/{len(words_set)} words ({coverage:.1f}%)")
         if missing_words:
@@ -184,7 +185,7 @@ class KMeansClustering:
             Exception: If there is an error during model loading or encoding.
         """
         try:
-            model = SentenceTransformer(model_name)
+            model = SentenceTransformer(model_name) 
             embeddings = model.encode(words)
             return dict(zip(words, embeddings))
         except Exception as e:
