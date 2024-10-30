@@ -1,5 +1,5 @@
 import unittest
-import numpy as np
+import numpy as np # type: ignore
 from src.data.preprocess_data import DataPreprocessor
 
 class TestDataPreprocessor(unittest.TestCase):
