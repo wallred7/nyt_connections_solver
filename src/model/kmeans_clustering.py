@@ -1,7 +1,7 @@
 import numpy as np
 from sklearn.metrics.pairwise import cosine_similarity, euclidean_distances #type: ignore 
 from sentence_transformers import SentenceTransformer, util
-from typing import List, Union, Tuple, Optional
+from typing import List, Dict, Union, Tuple, Optional
 
 class KMeansClustering:
     """
@@ -48,7 +48,7 @@ class KMeansClustering:
         elif self.init == 'kmeans++':
             self.centroids = self._kmeans_plusplus_init(X)
 
-    def _initialize_probabalistic_centroids(self, X: np.ndarray) -> np.ndarray:
+    def _initialize_kmeans_plusplus_centroids(self, X: np.ndarray) -> np.ndarray:
         """
         Initializes centroids using the k-means++ algorithm.
 
@@ -122,8 +122,49 @@ class KMeansClustering:
         similarities = self._compute_similarity(X, self.centroids)
         return np.argmax(similarities, axis=1)
 
+    def _load_glove_embeddings(self, words: List[str], glove_path: str = 'src/model/glove/glove.6B.{dim}d.txt', embedding_dim: int = 100) -> Dict[str, np.ndarray]:
+        """
+        Load GloVe embeddings for a given list of words. Only reads in the words from the list.
 
-    def encode_words(self, words: List[str], model_name: str = 'all-mpnet-base-v2') -> np.ndarray:
+        Args:
+            words: List of words to get embeddings for
+            glove_path: Path to GloVe file (e.g., 'glove.6B.100d.txt')
+            embedding_dim: Dimension of embeddings (default: 100)
+
+        Returns:
+            Dictionary mapping words to their embeddings
+        """
+        words_set = set(map(str.lower, words)) # O(1) lookup
+        word_to_embedding = {}
+
+        glove_path_dim = glove_path.format(dim = embedding_dim)
+
+        try:
+            with open(glove_path_dim, 'r', encoding='utf-8') as f:
+                for line in f:
+                    values = line.split()
+                    word = values[0].lower()
+
+                    if word in words_set:
+                        vector = np.asarray(values[1:], dtype='float32')
+                        word_to_embedding[word] = vector
+        except FileNotFoundError:
+            print(f"Error: GloVe file not found at {glove_path_dim}")
+            return {}
+
+        # Report coverage
+        found_words = set(word_to_embedding.keys())
+        missing_words = words_set - found_words
+        coverage = len(found_words) / len(words_set) * 100
+
+        print(f"Found embeddings for {len(found_words)}/{len(words_set)} words ({coverage:.1f}%)")
+        if missing_words:
+            print(f"Missing words: {', '.join(list(missing_words)[:10])}",
+                  "..." if len(missing_words) > 10 else "")
+
+        return word_to_embedding
+
+    def _load_sentence_transformer_embeddings(self, words: List[str], model_name: str = 'all-mpnet-base-v2') -> Dict[str, np.ndarray]:
         """
         Encodes words using word embeddings from a specified SentenceTransformer model.
 
@@ -132,7 +173,7 @@ class KMeansClustering:
             model_name (str, optional): The name of the SentenceTransformer model to use. Defaults to 'all-mpnet-base-v2'.
 
         Returns:
-            np.ndarray: The encoded words.
+            Dict[str, np.ndarray]: The encoded words as a dictionary word: vector.
 
         Raises:
             Exception: If there is an error during model loading or encoding.
@@ -140,6 +181,27 @@ class KMeansClustering:
         try:
             model = SentenceTransformer(model_name)
             embeddings = model.encode(words)
-            return embeddings
+            return dict(zip(words, embeddings))
         except Exception as e:
             raise Exception(f"Error during word embedding encoding: {e}")
+
+    def encode(self, words: List[str], embedding_method: str = 'glove') -> Dict[str, np.ndarray]:
+        """
+        Encodes words using either GloVe or SentenceTransformer embeddings.
+
+        Args:
+            words (List[str]): The words to encode.
+            embedding_method (str, optional): The embedding method to use ('glove' or 'sentence-transformer'). Defaults to 'glove'.
+
+        Returns:
+            Dict[str, np.ndarray]: The encoded words.
+
+        Raises:
+            ValueError: If an invalid embedding method is specified.
+        """
+        if embedding_method == 'glove':
+            return self._load_glove_embeddings(words)
+        elif embedding_method == 'sentence-transformer':
+            return self._load_sentence_transformer_embeddings(words)
+        else:
+            raise ValueError("Invalid embedding method. Choose 'glove' or 'sentence-transformer'.")
