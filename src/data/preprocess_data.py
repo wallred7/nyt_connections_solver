@@ -99,9 +99,3 @@ class DataPreprocessor:
         test_df = preprocessed_data.iloc[test_idx]
 
         return train_df, val_df, test_df
-
-
-if __name__ == '__main__':
-    preprocessor = DataPreprocessor()
-    preprocessed_df = preprocessor.transform()
-    print(preprocessed_df.head())
