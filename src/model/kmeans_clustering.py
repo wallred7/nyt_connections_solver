@@ -1,12 +1,15 @@
-import numpy as np
-from sklearn.metrics.pairwise import cosine_similarity, euclidean_distances #type: ignore 
-from sentence_transformers import SentenceTransformer, util
+import numpy as np # type: ignore
+from sklearn.metrics.pairwise import cosine_similarity, euclidean_distances  # type: ignore
+# from sentence_transformers import SentenceTransformer, util
 from typing import List, Dict, Union, Tuple, Optional
+import unittest
+import os
 
 class KMeansClustering:
     """
     K-Means clustering algorithm with multiple similarity metrics and word embedding encoding.
     """
+
     def __init__(self, n_clusters: int, max_iter: int = 100, similarity_metric: str = 'cosine', init: str = 'random'):
         """
         Initializes KMeansClustering with specified parameters.
@@ -46,7 +49,7 @@ class KMeansClustering:
             indices = np.random.choice(X.shape[0], self.n_clusters, replace=False)
             self.centroids = X[indices]
         elif self.init == 'kmeans++':
-            self.centroids = self._kmeans_plusplus_init(X)
+            self.centroids = self._initialize_kmeans_plusplus_centroids(X)
 
     def _initialize_kmeans_plusplus_centroids(self, X: np.ndarray) -> np.ndarray:
         """
@@ -67,7 +70,6 @@ class KMeansClustering:
             centroids.append(X[next_centroid_index])
         return np.array(centroids)
 
-
     def _compute_similarity(self, X: np.ndarray, centroids: np.ndarray) -> np.ndarray:
         """
         Computes the similarity between data points and centroids.
@@ -85,7 +87,7 @@ class KMeansClustering:
         if self.similarity_metric == 'cosine':
             return cosine_similarity(X, centroids)
         elif self.similarity_metric == 'euclidean':
-            return -euclidean_distances(X, centroids) #negate for max
+            return -euclidean_distances(X, centroids)  # negate for max
         else:
             raise ValueError("Invalid similarity metric.")
 
@@ -134,10 +136,10 @@ class KMeansClustering:
         Returns:
             Dictionary mapping words to their embeddings
         """
-        words_set = set(map(str.lower, words)) # O(1) lookup
+        words_set = set(map(str.lower, words))  # O(1) lookup
         word_to_embedding = {}
 
-        glove_path_dim = glove_path.format(dim = embedding_dim)
+        glove_path_dim = glove_path.format(dim=embedding_dim)
 
         try:
             with open(glove_path_dim, 'r', encoding='utf-8') as f:
@@ -150,6 +152,9 @@ class KMeansClustering:
                         word_to_embedding[word] = vector
         except FileNotFoundError:
             print(f"Error: GloVe file not found at {glove_path_dim}")
+            return {}
+        except Exception as e:
+            print(f"An unexpected error occurred while reading the GloVe file: {e}")
             return {}
 
         # Report coverage
