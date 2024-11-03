@@ -8,7 +8,7 @@ class KMeansClustering:
     K-Means clustering algorithm with multiple similarity metrics and word embedding encoding.
     """
 
-    def __init__(self, n_clusters: int, max_iter: int = 100, similarity_metric: str = 'cosine', init: str = 'random'):
+    def __init__(self, n_clusters: int, max_iter: int = 100, similarity_metric: str = 'cosine', init: str = 'random', embedding_dim: int = 50):
         """
         Initializes KMeansClustering with specified parameters.
 
@@ -17,6 +17,7 @@ class KMeansClustering:
             max_iter (int, optional): The maximum number of iterations. Defaults to 100.
             similarity_metric (str, optional): The similarity metric to use ('cosine' or 'euclidean'). Defaults to 'cosine'.
             init (str, optional): The centroid initialization method ('random' or 'kmeans++'). Defaults to 'random'.
+            embedding_dim (int, optional): The pretrained embedding dimensions. Defaults to 50.
 
         Raises:
             ValueError: If an invalid similarity metric or initialization method is provided.
@@ -35,6 +36,7 @@ class KMeansClustering:
         self.similarity_metric = similarity_metric
         self.init = init
         self.centroids = None
+        self.embedding_dim = embedding_dim
 
     def _initialize_centroids(self, X: np.ndarray) -> None:
         """
@@ -100,12 +102,20 @@ class KMeansClustering:
             KMeansClustering: The fitted model.
         """
         X = np.nan_to_num(X, nan=0.0) #Handle NaN values
+    
         self._initialize_centroids(X)
+
+        # K-means steps
+        # 1. initialize centroids at a a given point in the same dimensional space 
+        # 2. 
+
         for _ in range(self.max_iter):
             similarities = self._compute_similarity(X, self.centroids)
+            
             labels = np.argmax(similarities, axis=1)
+            
             new_centroids = np.array([X[labels == i].mean(axis=0) for i in range(self.n_clusters)])
-            if np.allclose(self.centroids, new_centroids):
+            if np.allclose(self.centroids, new_centroids, rtol=1e-1024, atol=1e-1024):
                 break
             self.centroids = new_centroids
         return self
@@ -123,7 +133,7 @@ class KMeansClustering:
         similarities = self._compute_similarity(X, self.centroids)
         return np.argmax(similarities, axis=1)
 
-    def _load_glove_embeddings(self, words: List[str], glove_path: str = 'src/model/glove/glove.6B.{dim}d.txt', embedding_dim: int = 100) -> Dict[str, np.ndarray]:
+    def _load_glove_embeddings(self, words: List[str], glove_path: str = 'src/model/glove/glove.6B.{dim}d.txt') -> np.ndarray:
         """
         Load GloVe embeddings for a given list of words. Only reads in the words from the list.
 
@@ -133,14 +143,14 @@ class KMeansClustering:
             embedding_dim: Dimension of embeddings (default: 100)
 
         Returns:
-            Dictionary mapping words to their embeddings
+            NumPy array of word embeddings
         """
-        if not words: #Handle empty words list
-            return {}
+        if not words.all(): # Handle empty words list
+            return np.empty((0, self.embedding_dim))
         words_set = set(map(str.lower, words))  # O(1) lookup
         word_to_embedding = {}
 
-        glove_path_dim = glove_path.format(dim=embedding_dim)
+        glove_path_dim = glove_path.format(dim=self.embedding_dim)
 
         try:
             with open(glove_path_dim, 'r', encoding='utf-8') as f:
@@ -153,10 +163,10 @@ class KMeansClustering:
                         word_to_embedding[word] = vector
         except FileNotFoundError:
             print(f"Error: GloVe file not found at {glove_path_dim}")
-            return {}
+            return np.empty((0, self.embedding_dim))
         except Exception as e:
             print(f"An unexpected error occurred while reading the GloVe file: {e}")
-            return {}
+            return np.empty((0, self.embedding_dim))
 
         # Report coverage
         found_words = set(word_to_embedding.keys())
@@ -168,9 +178,10 @@ class KMeansClustering:
             print(f"Missing words: {', '.join(list(missing_words)[:10])}",
                   "..." if len(missing_words) > 10 else "")
 
-        return word_to_embedding
+        embeddings = np.array(list(word_to_embedding.values()))
+        return embeddings
 
-    def _load_sentence_transformer_embeddings(self, words: List[str], model_name: str = 'all-mpnet-base-v2') -> Dict[str, np.ndarray]:
+    def _load_sentence_transformer_embeddings(self, words: List[str], model_name: str = 'all-mpnet-base-v2') -> np.ndarray:
         """
         Encodes words using word embeddings from a specified SentenceTransformer model.
 
@@ -179,7 +190,7 @@ class KMeansClustering:
             model_name (str, optional): The name of the SentenceTransformer model to use. Defaults to 'all-mpnet-base-v2'.
 
         Returns:
-            Dict[str, np.ndarray]: The encoded words as a dictionary word: vector.
+            NumPy array of word embeddings
 
         Raises:
             Exception: If there is an error during model loading or encoding.
@@ -187,11 +198,11 @@ class KMeansClustering:
         try:
             model = SentenceTransformer(model_name) 
             embeddings = model.encode(words)
-            return dict(zip(words, embeddings))
+            return embeddings
         except Exception as e:
             raise Exception(f"Error during word embedding encoding: {e}")
 
-    def encode(self, words: List[str], embedding_method: str = 'glove') -> Dict[str, np.ndarray]:
+    def encode(self, words: List[str], embedding_method: str = 'glove') -> np.ndarray:
         """
         Encodes words using either GloVe or SentenceTransformer embeddings.
 
@@ -200,7 +211,7 @@ class KMeansClustering:
             embedding_method (str, optional): The embedding method to use ('glove' or 'sentence-transformer'). Defaults to 'glove'.
 
         Returns:
-            Dict[str, np.ndarray]: The encoded words.
+            NumPy array of word embeddings
 
         Raises:
             ValueError: If an invalid embedding method is specified.
