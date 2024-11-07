@@ -1,6 +1,6 @@
-import numpy as np # type: ignore
-from sklearn.metrics.pairwise import cosine_similarity, euclidean_distances  # type: ignore
-from sentence_transformers import SentenceTransformer, util  # type: ignore
+import numpy as np
+from sklearn.metrics.pairwise import cosine_similarity, euclidean_distances
+from sentence_transformers import SentenceTransformer  # type: ignore
 from typing import List, Dict
 
 class KMeansClustering:
