@@ -1,19 +1,21 @@
+import numpy as np
+
 class Evaluator:
-    def __init__(self, words: list, labels: list):
+    def __init__(self, words: list[str], labels: np.ndarray):
         self.words = words
         self.labels = labels
         self.word_label_dict = self._create_word_label_dict()
         self.groups = self._create_groups()
 
-    def _create_word_label_dict(self):
+    def _create_word_label_dict(self) -> dict[str, int]:
         """Creates a dictionary mapping words to their labels."""
         word_label_dict = {}
         for i, label in enumerate(self.labels):
             word_label_dict[self.words[i]] = label
-        print(word_label_dict)
+        # print(word_label_dict)
         return word_label_dict
 
-    def _create_groups(self):
+    def _create_groups(self) -> dict[str, list[str]]:
         """Creates groups of words based on their labels."""
         groups = {}
         for word, label in self.word_label_dict.items():
@@ -22,11 +24,11 @@ class Evaluator:
             groups[label].append(word)
         return groups
 
-    def _check_group_match(self, group1, group2):
+    def _check_group_match(self, group1: list[str], group2: list[str]) -> bool:
         """Checks if two groups are equivalent, regardless of order."""
         return set(group1) == set(group2)
 
-    def evaluate(self, true_labels):
+    def evaluate(self, true_labels: list[list[str]]) -> bool:
         """Evaluates the submission against the true labels."""
         # Assuming true_labels is a list of lists, where each inner list represents a group
         true_groups = {}
@@ -45,5 +47,5 @@ class Evaluator:
                     found_match = True
                     break
             if not found_match:
-                return False
+                return False 
         return True
