@@ -1,6 +1,6 @@
 import numpy as np
 from sklearn.metrics.pairwise import cosine_similarity, euclidean_distances
-from sentence_transformers import SentenceTransformer  # type: ignore
+# from sentence_transformers import SentenceTransformer  # type: ignore
 from typing import List, Dict
 
 class KMeansClustering:
@@ -8,7 +8,13 @@ class KMeansClustering:
     K-Means clustering algorithm with multiple similarity metrics and word embedding encoding.
     """
 
-    def __init__(self, n_clusters: int, max_iter: int = 100, similarity_metric: str = 'cosine', init: str = 'random', embedding_dim: int = 50):
+    def __init__(self, 
+                 n_clusters: int, 
+                 max_iter: int = 100, 
+                 similarity_metric: str = 'cosine', 
+                 init: str = 'random', 
+                 embedding_dim: int = 50,
+                 random_seed: int = 42):
         """
         Initializes KMeansClustering with specified parameters.
 
@@ -35,8 +41,10 @@ class KMeansClustering:
         self.max_iter = max_iter
         self.similarity_metric = similarity_metric
         self.init = init
-        self.centroids = None
         self.embedding_dim = embedding_dim
+        self.random_seed = random_seed
+        self.centroids = None
+        self.labels = None
 
     def _initialize_centroids(self, X: np.ndarray) -> None:
         """
@@ -45,6 +53,7 @@ class KMeansClustering:
         Args:
             X (np.ndarray): The data points.
         """
+        np.random.seed(self.random_seed)
         if self.init == 'random':
             indices = np.random.choice(X.shape[0], self.n_clusters, replace=False)
             self.centroids = X[indices]
@@ -105,19 +114,16 @@ class KMeansClustering:
     
         self._initialize_centroids(X)
 
-        # K-means steps
-        # 1. initialize centroids at a a given point in the same dimensional space 
-        # 2. 
-
         for _ in range(self.max_iter):
             similarities = self._compute_similarity(X, self.centroids)
             
             labels = np.argmax(similarities, axis=1)
-            
             new_centroids = np.array([X[labels == i].mean(axis=0) for i in range(self.n_clusters)])
-            if np.allclose(self.centroids, new_centroids, rtol=1e-1024, atol=1e-1024):
+            if np.allclose(self.centroids, new_centroids, rtol=1e-16, atol=1e-16):
+                self.labels = labels
                 break
             self.centroids = new_centroids
+
         return self
 
     def predict(self, X: np.ndarray) -> np.ndarray:
@@ -173,7 +179,7 @@ class KMeansClustering:
         missing_words = words_set - found_words
         coverage = len(found_words) / len(words_set) * 100 if words_set else 0 #Handle empty words_set
 
-        print(f"Found embeddings for {len(found_words)}/{len(words_set)} words ({coverage:.1f}%)")
+        # print(f"Found embeddings for {len(found_words)}/{len(words_set)} words ({coverage:.1f}%)")
         if missing_words:
             print(f"Missing words: {', '.join(list(missing_words)[:10])}",
                   "..." if len(missing_words) > 10 else "")
