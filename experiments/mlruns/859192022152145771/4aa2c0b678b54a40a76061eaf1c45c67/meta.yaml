@@ -1,0 +1,15 @@
+artifact_uri: file:///home/zorin/Documents/nyt_connections_solver/experiments/mlruns/859192022152145771/4aa2c0b678b54a40a76061eaf1c45c67/artifacts
+end_time: 1731028643428
+entry_point_name: ''
+experiment_id: '859192022152145771'
+lifecycle_stage: active
+run_id: 4aa2c0b678b54a40a76061eaf1c45c67
+run_name: fearless-eel-482
+run_uuid: 4aa2c0b678b54a40a76061eaf1c45c67
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1731028212121
+status: 3
+tags: []
+user_id: zorin

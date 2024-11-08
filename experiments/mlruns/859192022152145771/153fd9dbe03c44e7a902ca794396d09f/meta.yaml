@@ -1,0 +1,15 @@
+artifact_uri: file:///home/zorin/Documents/nyt_connections_solver/experiments/mlruns/859192022152145771/153fd9dbe03c44e7a902ca794396d09f/artifacts
+end_time: 1731007241555
+entry_point_name: ''
+experiment_id: '859192022152145771'
+lifecycle_stage: active
+run_id: 153fd9dbe03c44e7a902ca794396d09f
+run_name: treasured-dog-746
+run_uuid: 153fd9dbe03c44e7a902ca794396d09f
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1731007240337
+status: 4
+tags: []
+user_id: zorin

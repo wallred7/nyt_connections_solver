@@ -1,0 +1,15 @@
+artifact_uri: file:///home/zorin/Documents/nyt_connections_solver/experiments/mlruns/859192022152145771/277b00b20f6e420a85c4fe03b3d056a8/artifacts
+end_time: 1731030372758
+entry_point_name: ''
+experiment_id: '859192022152145771'
+lifecycle_stage: active
+run_id: 277b00b20f6e420a85c4fe03b3d056a8
+run_name: caring-ape-562
+run_uuid: 277b00b20f6e420a85c4fe03b3d056a8
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1731029872750
+status: 3
+tags: []
+user_id: zorin

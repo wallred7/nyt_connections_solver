@@ -1,0 +1,15 @@
+artifact_uri: file:///home/zorin/Documents/nyt_connections_solver/experiments/mlruns/859192022152145771/ba2cf933cb97431d9e1151acb0e660db/artifacts
+end_time: 1731024192108
+entry_point_name: ''
+experiment_id: '859192022152145771'
+lifecycle_stage: active
+run_id: ba2cf933cb97431d9e1151acb0e660db
+run_name: stylish-ant-421
+run_uuid: ba2cf933cb97431d9e1151acb0e660db
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1731024156534
+status: 4
+tags: []
+user_id: zorin

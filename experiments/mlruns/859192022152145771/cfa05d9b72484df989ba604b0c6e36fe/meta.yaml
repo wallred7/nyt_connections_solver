@@ -1,0 +1,15 @@
+artifact_uri: file:///home/zorin/Documents/nyt_connections_solver/experiments/mlruns/859192022152145771/cfa05d9b72484df989ba604b0c6e36fe/artifacts
+end_time: 1731026197419
+entry_point_name: ''
+experiment_id: '859192022152145771'
+lifecycle_stage: active
+run_id: cfa05d9b72484df989ba604b0c6e36fe
+run_name: monumental-shark-558
+run_uuid: cfa05d9b72484df989ba604b0c6e36fe
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1731026184299
+status: 4
+tags: []
+user_id: zorin

@@ -1,0 +1,15 @@
+artifact_uri: file:///home/zorin/Documents/nyt_connections_solver/experiments/mlruns/859192022152145771/f2a2f03f20944bc383bba6484d6a9e1e/artifacts
+end_time: 1731028196526
+entry_point_name: ''
+experiment_id: '859192022152145771'
+lifecycle_stage: active
+run_id: f2a2f03f20944bc383bba6484d6a9e1e
+run_name: capable-vole-778
+run_uuid: f2a2f03f20944bc383bba6484d6a9e1e
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1731028175605
+status: 3
+tags: []
+user_id: zorin

@@ -1,0 +1,15 @@
+artifact_uri: file:///home/zorin/Documents/nyt_connections_solver/experiments/mlruns/859192022152145771/131c6b976b364fdfb527227f946f5ae8/artifacts
+end_time: 1731023478564
+entry_point_name: ''
+experiment_id: '859192022152145771'
+lifecycle_stage: active
+run_id: 131c6b976b364fdfb527227f946f5ae8
+run_name: intrigued-chimp-481
+run_uuid: 131c6b976b364fdfb527227f946f5ae8
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1731023460324
+status: 3
+tags: []
+user_id: zorin

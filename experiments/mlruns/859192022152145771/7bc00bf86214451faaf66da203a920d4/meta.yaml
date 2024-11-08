@@ -1,0 +1,15 @@
+artifact_uri: file:///home/zorin/Documents/nyt_connections_solver/experiments/mlruns/859192022152145771/7bc00bf86214451faaf66da203a920d4/artifacts
+end_time: 1731007456210
+entry_point_name: ''
+experiment_id: '859192022152145771'
+lifecycle_stage: active
+run_id: 7bc00bf86214451faaf66da203a920d4
+run_name: unruly-crane-503
+run_uuid: 7bc00bf86214451faaf66da203a920d4
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1731007454990
+status: 4
+tags: []
+user_id: zorin

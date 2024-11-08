@@ -1,0 +1,15 @@
+artifact_uri: file:///home/zorin/Documents/nyt_connections_solver/experiments/mlruns/859192022152145771/157ecb043977494ea2ea9e61147a9b18/artifacts
+end_time: 1731027504518
+entry_point_name: ''
+experiment_id: '859192022152145771'
+lifecycle_stage: active
+run_id: 157ecb043977494ea2ea9e61147a9b18
+run_name: intelligent-wasp-382
+run_uuid: 157ecb043977494ea2ea9e61147a9b18
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1731027482780
+status: 3
+tags: []
+user_id: zorin
