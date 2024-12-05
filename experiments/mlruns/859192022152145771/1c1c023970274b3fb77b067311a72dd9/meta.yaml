@@ -1,0 +1,15 @@
+artifact_uri: file:///home/zorin/Documents/nyt_connections_solver/experiments/mlruns/859192022152145771/1c1c023970274b3fb77b067311a72dd9/artifacts
+end_time: 1731022545993
+entry_point_name: ''
+experiment_id: '859192022152145771'
+lifecycle_stage: active
+run_id: 1c1c023970274b3fb77b067311a72dd9
+run_name: puzzled-hawk-54
+run_uuid: 1c1c023970274b3fb77b067311a72dd9
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1731022538848
+status: 3
+tags: []
+user_id: zorin

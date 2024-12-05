@@ -1,0 +1,15 @@
+artifact_uri: file:///home/zorin/Documents/nyt_connections_solver/experiments/mlruns/859192022152145771/b31695c6e0574d86a5115f3f22781402/artifacts
+end_time: 1731024346867
+entry_point_name: ''
+experiment_id: '859192022152145771'
+lifecycle_stage: active
+run_id: b31695c6e0574d86a5115f3f22781402
+run_name: rare-turtle-67
+run_uuid: b31695c6e0574d86a5115f3f22781402
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1731024309914
+status: 4
+tags: []
+user_id: zorin

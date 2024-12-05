@@ -1,0 +1,15 @@
+artifact_uri: file:///home/zorin/Documents/nyt_connections_solver/experiments/mlruns/859192022152145771/ebdfc692814c41d0b71802bfb3115407/artifacts
+end_time: 1731028042959
+entry_point_name: ''
+experiment_id: '859192022152145771'
+lifecycle_stage: active
+run_id: ebdfc692814c41d0b71802bfb3115407
+run_name: unleashed-wren-223
+run_uuid: ebdfc692814c41d0b71802bfb3115407
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1731027610900
+status: 4
+tags: []
+user_id: zorin

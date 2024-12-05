@@ -1,0 +1,15 @@
+artifact_uri: file:///home/zorin/Documents/nyt_connections_solver/experiments/mlruns/859192022152145771/a019d608faa541749ec4ff467fea4eac/artifacts
+end_time: 1731028884478
+entry_point_name: ''
+experiment_id: '859192022152145771'
+lifecycle_stage: active
+run_id: a019d608faa541749ec4ff467fea4eac
+run_name: treasured-grouse-783
+run_uuid: a019d608faa541749ec4ff467fea4eac
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1731028867204
+status: 4
+tags: []
+user_id: zorin

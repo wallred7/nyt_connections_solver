@@ -1,0 +1,15 @@
+artifact_uri: file:///home/zorin/Documents/nyt_connections_solver/experiments/mlruns/859192022152145771/1c78664c17a14e8db5c344ba04094deb/artifacts
+end_time: 1731023699920
+entry_point_name: ''
+experiment_id: '859192022152145771'
+lifecycle_stage: active
+run_id: 1c78664c17a14e8db5c344ba04094deb
+run_name: debonair-goose-432
+run_uuid: 1c78664c17a14e8db5c344ba04094deb
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1731023677553
+status: 3
+tags: []
+user_id: zorin

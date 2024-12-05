@@ -1,0 +1,15 @@
+artifact_uri: file:///home/zorin/Documents/nyt_connections_solver/experiments/mlruns/859192022152145771/cc1adf72deb04689be8bc9b00710d8a3/artifacts
+end_time: 1731029515836
+entry_point_name: ''
+experiment_id: '859192022152145771'
+lifecycle_stage: active
+run_id: cc1adf72deb04689be8bc9b00710d8a3
+run_name: grandiose-steed-103
+run_uuid: cc1adf72deb04689be8bc9b00710d8a3
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1731028923081
+status: 3
+tags: []
+user_id: zorin
